@@ -1,11 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import AdLeashNavbar from './AdLeashNavbar/AdLeashNavbar.component.js';
 
 class App extends Component {
 	render() {
 		return (
 			<div>
 				<h1>I am the top level of the app.</h1>
+				<h2>Hello, World!</h2>
+				<AdLeashNavbar/>
 			</div>
 		)
 	}

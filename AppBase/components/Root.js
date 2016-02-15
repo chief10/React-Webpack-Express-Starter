@@ -8,11 +8,13 @@ import '../../public/css/style.scss';
 const store = configureStore();
 
 
-window.onload = function() {
-	render (
+export default class Root extends Component {
+	render() {
+		return (
 		<Provider store={store}>
 			< App />	
-		</Provider>,
-		document.getElementById('root')
-	 );
+		</Provider>
+		)
+	}
 }
+

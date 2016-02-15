@@ -1,7 +1,7 @@
 import PATH from './path.config.js';
 
 module.exports = {
-	entry: PATH.src.js + '/components/Root.js',
+	entry: PATH.src.js + '/index.js',
 	devtool: 'source-map',
 	output: {
 		path: PATH.dist.js,

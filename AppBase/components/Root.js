@@ -5,6 +5,7 @@ import configureStore from '../lib/store';
 import App from './App';
 
 import '../../public/css/style.scss';
+import '../../public/css/tables.scss';
 const store = configureStore();
 
 

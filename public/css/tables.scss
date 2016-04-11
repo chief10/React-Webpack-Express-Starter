@@ -1,0 +1,137 @@
+/////////////////////
+// Start of config //
+/////////////////////
+
+$color-nightly: #444;
+$color-stars: #FFF;
+$color-highlight: #3498DB;
+$color-accent: #f4f4f4;
+$color-success: #6AA239;
+
+%primary-body-copy {
+  font-size: 16px;
+  line-height: 22px;
+}
+
+%secondary-body-copy {
+  font-size: 13px;
+  line-height: 17px;
+}
+
+///////////////////
+// End of config //
+///////////////////
+
+
+
+.table.ni-table-comparison {
+  
+  //Have to reset these values specifically for the table.
+  .ni-btn {
+    margin: 0;
+    width: 112px;
+  }
+  
+  //Yes, this could have been written in a more concise
+  //way, however that would not help in terms of readability 
+  > thead > tr > th {
+    padding: 0;
+    padding-right: 6px;  
+    border: none;
+  }
+  
+  //Styles for the header row; the cells
+  //with the dark background.
+  > thead > tr > th > div {
+    @extend %secondary-body-copy;
+    background-color: $color-nightly;
+    color: $color-stars;
+    border-top-width: 4px;
+    border-color: $color-highlight;
+    border-top-style: solid;
+    padding: 10px;
+    display: flex;
+    min-height: 58px;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  > thead > tr > th > div > i {
+    padding-left: 5px;
+  }
+  
+  > tbody > tr > td {
+    @extend %secondary-body-copy;
+    padding: 0;
+    padding-right:6px;
+    border: none;  
+  }
+  
+  //Styles for main cells of table.
+  > tbody > tr > td > div {
+    padding: 10px 20px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+  }
+  
+  //Implementing striped look.
+  > tbody > tr:nth-child(even) {
+    > td > div {
+      background-color: $color-accent;
+    }
+  }
+  
+  //Styles for prices.
+  > tbody > tr > td:nth-child(2) {
+    @extend %primary-body-copy;
+    color: $color-success;
+    font-weight: bolder;
+  }
+}
+
+
+
+.table.ni-table-data {
+  > thead {
+    @extend %secondary-body-copy;
+    text-transform: uppercase;
+    font-weight: bolder;
+  }
+  
+  > tbody > tr {
+    height: 50px;
+  }
+  
+  > tbody > tr:nth-child(2n) {
+    background: #f4f4f4;
+  }
+  
+  > tbody > tr > td {
+      line-height: 50px;
+      padding-top: 0;
+      padding-bottom: 0;
+      @extend %secondary-body-copy;
+  }
+  
+  > tbody > tr > td:not(:last-child) {
+    border-right: 1px solid #ccc;
+  }
+  
+}
+
+
+
+
+
+
+
+
+
+// Not part of framework. 
+// Only for the display of the table here.
+.display-wrapper {
+  width: 1200px;
+  margin: 45px auto;
+}
+

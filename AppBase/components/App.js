@@ -1,15 +1,21 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import AdLeashNavbar from './AdLeashNavbar/AdLeashNavbar.component.js';
 import TableContainer from './TableContainer.js';
+import * as actions from '../lib/actions.js';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+  
+  componentDidMount() {
+    const { dispatch } = this.props;
+  }
+  
 	render() {
 		return (
 			<div>
-				<h1>I am the top level of the app.</h1>
-				<h2>Hello, World! asdfasdfa</h2>
-         <TableContainer />
+         <TableContainer dataRows={this.props.dataRows}/>
 			</div>
 		)
 	}
@@ -22,5 +28,7 @@ class App extends Component {
 function provideState(state = {}) {
 	return state;
 }
+
+
 
 export default connect(provideState)(App);

@@ -45,11 +45,15 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	__webpack_require__(194);
+	__webpack_require__(197);
 	__webpack_require__(187);
 	__webpack_require__(160);
+	__webpack_require__(188);
 	__webpack_require__(189);
-	__webpack_require__(196);
+	__webpack_require__(190);
+	__webpack_require__(191);
+	__webpack_require__(195);
+	__webpack_require__(199);
 	__webpack_require__(186);
 	module.exports = __webpack_require__(184);
 
@@ -19745,7 +19749,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -19766,9 +19770,11 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	__webpack_require__(190);
+	__webpack_require__(191);
 	
-	__webpack_require__(198);
+	__webpack_require__(195);
+	
+	__webpack_require__(202);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -19778,29 +19784,45 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var store = (0, _store2.default)();
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	var item = document.getElementById('startingData');
+	var startingData = JSON.parse(item.innerHTML);
+	
+	var initialState = {
+	  sortableAttrs: [],
+	
+	  //This is the source of truth for this whole thing.
+	  dataRows: [].concat(_toConsumableArray(startingData)),
+	
+	  //When the user wants to see a limited subset of Data,
+	  //it goes through here.
+	  filteredData: []
+	};
+	
+	var store = (0, _store2.default)(initialState);
 	
 	var Root = function (_Component) {
-		_inherits(Root, _Component);
+	  _inherits(Root, _Component);
 	
-		function Root() {
-			_classCallCheck(this, Root);
+	  function Root() {
+	    _classCallCheck(this, Root);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(Root).apply(this, arguments));
-		}
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Root).apply(this, arguments));
+	  }
 	
-		_createClass(Root, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					_reactRedux.Provider,
-					{ store: store },
-					_react2.default.createElement(_App2.default, null)
-				);
-			}
-		}]);
+	  _createClass(Root, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactRedux.Provider,
+	        { store: store },
+	        _react2.default.createElement(_App2.default, null)
+	      );
+	    }
+	  }]);
 	
-		return Root;
+	  return Root;
 	}(_react.Component);
 
 	exports.default = Root;
@@ -21434,13 +21456,22 @@
 		value: true
 	});
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	// InitialState.dataRows items can have a number of differeing
+	// attributes based on the data that is passed to it. However, three items will
+	// always exist: an href for the "select" button, an image src and a price.
+	
 	//First app reducer.
-	function appReducer(state, action) {
+	function appReducer() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+		var action = arguments[1];
+	
 		switch (action.type) {
-			case 'SOMETHING':
-				return {
-					//Change State here
-				};
+			case 'POPULATE_DATAROWS':
+				return Object.assign({}, state, {
+					dataRows: [].concat(_toConsumableArray(action.dataRows))
+				});
 			default:
 				return state;
 		}
@@ -21455,7 +21486,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -21466,13 +21497,15 @@
 	
 	var _reactRedux = __webpack_require__(161);
 	
-	var _AdLeashNavbarComponent = __webpack_require__(188);
-	
-	var _AdLeashNavbarComponent2 = _interopRequireDefault(_AdLeashNavbarComponent);
-	
-	var _TableContainer = __webpack_require__(189);
+	var _TableContainer = __webpack_require__(188);
 	
 	var _TableContainer2 = _interopRequireDefault(_TableContainer);
+	
+	var _actions = __webpack_require__(199);
+	
+	var actions = _interopRequireWildcard(_actions);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21483,36 +21516,31 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var App = function (_Component) {
-		_inherits(App, _Component);
+	  _inherits(App, _Component);
 	
-		function App() {
-			_classCallCheck(this, App);
+	  function App(props) {
+	    _classCallCheck(this, App);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
-		}
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+	  }
 	
-		_createClass(App, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'h1',
-						null,
-						'I am the top level of the app.'
-					),
-					_react2.default.createElement(
-						'h2',
-						null,
-						'Hello, World! asdfasdfa'
-					),
-					_react2.default.createElement(_TableContainer2.default, null)
-				);
-			}
-		}]);
+	  _createClass(App, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var dispatch = this.props.dispatch;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_TableContainer2.default, { dataRows: this.props.dataRows })
+	      );
+	    }
+	  }]);
 	
-		return App;
+	  return App;
 	}(_react.Component);
 	
 	//This function can be changed to return only
@@ -21522,9 +21550,9 @@
 	
 	
 	function provideState() {
-		var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	
-		return state;
+	  return state;
 	}
 	
 	exports.default = (0, _reactRedux.connect)(provideState)(App);
@@ -21533,10 +21561,10 @@
 /* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -21544,6 +21572,14 @@
 	var _react = __webpack_require__(2);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _TableLeft = __webpack_require__(189);
+	
+	var _TableLeft2 = _interopRequireDefault(_TableLeft);
+	
+	var _TableRight = __webpack_require__(190);
+	
+	var _TableRight2 = _interopRequireDefault(_TableRight);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21553,34 +21589,49 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var AdLeashNavbar = function (_Component) {
-		_inherits(AdLeashNavbar, _Component);
+	var TableContainer = function (_Component) {
+	  _inherits(TableContainer, _Component);
 	
-		function AdLeashNavbar() {
-			_classCallCheck(this, AdLeashNavbar);
+	  function TableContainer(props) {
+	    _classCallCheck(this, TableContainer);
 	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(AdLeashNavbar).apply(this, arguments));
-		}
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TableContainer).call(this, props));
+	    //Methods that need to be bound to "this";
+	  }
 	
-		_createClass(AdLeashNavbar, [{
-			key: "render",
-			value: function render() {
-				return _react2.default.createElement(
-					"div",
-					{ className: "AdLeashNavbar" },
-					_react2.default.createElement(
-						"h2",
-						null,
-						"This is my navbar"
-					)
-				);
-			}
-		}]);
+	  _createClass(TableContainer, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'TableContainer' },
+	        _react2.default.createElement('div', { className: 'TableToggles' }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'TableTable' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'TableContainerLeft' },
+	            _react2.default.createElement(_TableLeft2.default, { dataRows: this.props.dataRows })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'TableContainerRight' },
+	            _react2.default.createElement(_TableRight2.default, { dataRows: this.props.dataRows })
+	          )
+	        )
+	      );
+	    }
+	  }]);
 	
-		return AdLeashNavbar;
+	  return TableContainer;
 	}(_react.Component);
-
-	exports.default = AdLeashNavbar;
+	
+	exports.default = TableContainer;
+	;
 
 /***/ },
 /* 189 */
@@ -21598,9 +21649,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TableLeft = __webpack_require__(197);
+	var _TableLeftStaticHead = __webpack_require__(200);
 	
-	var _TableLeft2 = _interopRequireDefault(_TableLeft);
+	var _TableLeftStaticHead2 = _interopRequireDefault(_TableLeftStaticHead);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21610,55 +21661,231 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var TableContainer = function (_Component) {
-	  _inherits(TableContainer, _Component);
+	var TableLeft = function (_Component) {
+	  _inherits(TableLeft, _Component);
 	
-	  function TableContainer() {
-	    _classCallCheck(this, TableContainer);
+	  function TableLeft() {
+	    _classCallCheck(this, TableLeft);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TableContainer).apply(this, arguments));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TableLeft).apply(this, arguments));
 	  }
 	
-	  _createClass(TableContainer, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {}
-	  }, {
+	  _createClass(TableLeft, [{
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'div',
-	        { className: 'TableContainer' },
+	        'table',
+	        { className: 'table ni-table-comparison' },
+	        _react2.default.createElement(_TableLeftStaticHead2.default, null),
 	        _react2.default.createElement(
-	          'div',
+	          'tbody',
 	          null,
-	          'TableLeft',
-	          _react2.default.createElement(_TableLeft2.default, null)
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          'TableRight'
+	          this.props.dataRows.map(function (item, key) {
+	            return _react2.default.createElement(
+	              'tr',
+	              { key: key },
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'div',
+	                  null,
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '/en-us/shop.html', className: 'ni-uppercase ni-btn ni-btn-commerce' },
+	                    _react2.default.createElement(
+	                      'span',
+	                      null,
+	                      'Select'
+	                    )
+	                  )
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'td',
+	                null,
+	                _react2.default.createElement(
+	                  'div',
+	                  null,
+	                  '$',
+	                  item.Price
+	                )
+	              )
+	            );
+	          })
 	        )
 	      );
 	    }
 	  }]);
 	
-	  return TableContainer;
+	  return TableLeft;
 	}(_react.Component);
 
-	exports.default = TableContainer;
+	exports.default = TableLeft;
 
 /***/ },
 /* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _helpers = __webpack_require__(201);
+	
+	var helpers = _interopRequireWildcard(_helpers);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TableRight = function (_Component) {
+	  _inherits(TableRight, _Component);
+	
+	  function TableRight() {
+	    _classCallCheck(this, TableRight);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TableRight).apply(this, arguments));
+	  }
+	
+	  _createClass(TableRight, [{
+	    key: 'render',
+	    value: function render() {
+	      var dataRows = this.props.dataRows;
+	
+	      var headValues = Object.keys(dataRows[0]);
+	      var bodyValues = _properBodyValues(dataRows);
+	
+	      var formattedHeadValues = headValues.map(function (val) {
+	        return _camelCaseItems(val);
+	      }).filter(function (val) {
+	        return val !== null;
+	      });
+	
+	      return _react2.default.createElement(
+	        'table',
+	        { className: 'table ni-table-comparison' },
+	        _react2.default.createElement(
+	          'thead',
+	          null,
+	          _react2.default.createElement(
+	            'tr',
+	            null,
+	            formattedHeadValues.map(function (val, idx) {
+	              return _react2.default.createElement(
+	                'th',
+	                { key: idx },
+	                _react2.default.createElement(
+	                  'div',
+	                  null,
+	                  _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    val
+	                  )
+	                )
+	              );
+	            })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'tbody',
+	          null,
+	          bodyValues.map(function (item, idx) {
+	            //Only want values for the body.
+	            //For each of the body values, I want to create a
+	            //new row.
+	            return _react2.default.createElement(
+	              'tr',
+	              { key: idx },
+	              _provideValuesFromKeys(item).map(function (localVal, key) {
+	                return _react2.default.createElement(
+	                  'td',
+	                  { key: key },
+	                  _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    localVal
+	                  )
+	                );
+	              })
+	            );
+	          })
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return TableRight;
+	}(_react.Component);
+	
+	//Checks to make sure the values are not one of the ones we have no
+	//intrest in.
+	
+	
+	exports.default = TableRight;
+	function _removeUnwantedValues(val) {
+	  if (val === "id" || val === "selected" || val === "Price") {
+	    return true;
+	  } else {
+	    return false;
+	  }
+	}
+	
+	//If the item is not one of the unwanted terms,
+	//go a head and camelcase it.
+	function _camelCaseItems(item) {
+	  return _removeUnwantedValues(item) ? null : helpers.camelToReadable(item);
+	}
+	
+	//Formats the body data to include only the items we want.
+	function _properBodyValues(arrOfValues) {
+	  return arrOfValues.map(function (val) {
+	    var newObj = {};
+	    for (var props in val) {
+	      if (!_removeUnwantedValues(props)) {
+	        newObj[props] = val[props];
+	      }
+	    }
+	    return newObj;
+	  });
+	}
+	
+	//Takes an object and gives the values from
+	//each key.
+	function _provideValuesFromKeys(obj) {
+	  var arrOfValues = [];
+	  for (var prop in obj) {
+	    arrOfValues.push(obj[prop]);
+	  }
+	  return arrOfValues;
+	}
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(191);
+	var content = __webpack_require__(192);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(193)(content, {});
+	var update = __webpack_require__(194)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -21675,21 +21902,21 @@
 	}
 
 /***/ },
-/* 191 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(192)();
+	exports = module.exports = __webpack_require__(193)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, "body {\n  padding: 50px;\n  font: 14px \"Lucida Grande\", Helvetica, Arial, sans-serif;\n  background-color: green; }\n\na {\n  color: #00B7FF; }\n", ""]);
+	exports.push([module.id, "body {\n  padding: 50px;\n  font: 14px \"Lucida Grande\", Helvetica, Arial, sans-serif;\n  background-color: white; }\n\na {\n  color: #00B7FF; }\n\n.ni-table-highlight {\n  display: none !important; }\n\n.TableTable {\n  display: flex; }\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -21744,7 +21971,7 @@
 	};
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -21996,39 +22223,79 @@
 
 
 /***/ },
-/* 194 */
+/* 195 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(196);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(194)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./tables.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./tables.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(193)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".table.ni-table-comparison > tbody > tr > td:nth-child(2) {\n  font-size: 16px;\n  line-height: 22px; }\n\n.table.ni-table-comparison > thead > tr > th > div, .table.ni-table-comparison > tbody > tr > td, .table.ni-table-data > thead, .table.ni-table-data > tbody > tr > td {\n  font-size: 13px;\n  line-height: 17px; }\n\n.table.ni-table-comparison .ni-btn {\n  margin: 0;\n  width: 112px; }\n\n.table.ni-table-comparison > thead > tr > th {\n  padding: 0;\n  padding-right: 6px;\n  border: none;\n  min-width: 100px; }\n\n.table.ni-table-comparison > thead > tr > th > div {\n  background-color: #444;\n  color: #FFF;\n  border-top-width: 4px;\n  border-color: #3498DB;\n  border-top-style: solid;\n  padding: 10px;\n  display: flex;\n  min-height: 58px;\n  justify-content: space-between; }\n\n.table.ni-table-comparison > thead > tr > th > div > i {\n  padding-left: 5px; }\n\n.table.ni-table-comparison > tbody > tr > td {\n  padding: 0;\n  padding-right: 6px;\n  border: none; }\n\n.table.ni-table-comparison > tbody > tr > td > div {\n  padding: 10px 20px;\n  height: 62px;\n  display: flex;\n  align-items: center; }\n\n.table.ni-table-comparison > tbody > tr:nth-child(even) > td > div {\n  background-color: #f4f4f4; }\n\n.table.ni-table-comparison > tbody > tr > td:nth-child(2) {\n  color: #6AA239;\n  font-weight: bolder; }\n\n.table.ni-table-data > thead {\n  text-transform: uppercase;\n  font-weight: bolder; }\n\n.table.ni-table-data > tbody > tr {\n  height: 50px; }\n\n.table.ni-table-data > tbody > tr:nth-child(2n) {\n  background: #f4f4f4; }\n\n.table.ni-table-data > tbody > tr > td {\n  line-height: 50px;\n  padding-top: 0;\n  padding-bottom: 0; }\n\n.table.ni-table-data > tbody > tr > td:not(:last-child) {\n  border-right: 1px solid #ccc; }\n\n.display-wrapper {\n  width: 1200px;\n  margin: 45px auto; }\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _pathConfig = __webpack_require__(195);
+	var _pathConfig = __webpack_require__(198);
 	
 	var _pathConfig2 = _interopRequireDefault(_pathConfig);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	module.exports = {
-		entry: _pathConfig2.default.src.js + '/index.js',
-		devtool: 'source-map',
-		output: {
-			path: _pathConfig2.default.dist.js,
-			filename: 'bundle.js'
-		},
+	  entry: _pathConfig2.default.src.js + '/index.js',
+	  devtool: 'source-map',
+	  output: {
+	    path: _pathConfig2.default.dist.js,
+	    filename: 'bundle.js'
+	  },
 	
-		module: {
-			loaders: [
+	  module: {
+	    loaders: [
 	
-			//Javascript Loader
-			{ test: /\.js$/, loader: 'babel-loader', exclude: '/node_modules/' },
+	    //Javascript Loader
+	    { test: /\.js$/, loader: 'babel-loader', exclude: '/node_modules/' },
 	
-			//SCSS/CSS Loader
-			{ test: /\.scss$/, loaders: ['style', 'css', 'sass'] }]
-		}
+	    //SCSS/CSS Loader
+	    { test: /\.scss$/, loaders: ['style', 'css', 'sass'] }]
+	  }
 	
 	};
 
 /***/ },
-/* 195 */
+/* 198 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22049,42 +22316,52 @@
 	exports.default = PATHS;
 
 /***/ },
-/* 196 */
+/* 199 */
 /***/ function(module, exports) {
 
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
+	exports.populateInitialData = populateInitialData;
 	exports.addSomething = addSomething;
 	exports.giveNumTwo = giveNumTwo;
 	exports.giveNumberThree = giveNumberThree;
 	var DO_SOMETHING = exports.DO_SOMETHING = "DO_SOMETHING";
+	var POPULATE_DATAROWS = exports.POPULATE_DATAROWS = "POPULATE_DATAROWS";
 	
+	function populateInitialData(startingData) {
+	  return {
+	    type: POPULATE_DATAROWS,
+	    dataRows: startingData
+	  };
+	}
+	
+	//These functions aren't used for anything.
 	function addSomething(thingToAdd) {
-		return {
-			type: DO_SOMETHING,
-			id: '1',
-			thingToAdd: thingToAdd
-		};
+	  return {
+	    type: DO_SOMETHING,
+	    id: '1',
+	    thingToAdd: thingToAdd
+	  };
 	}
 	
 	function giveNumTwo() {
-		var item = 2;
-		return item;
+	  var item = 2;
+	  return item;
 	}
 	
 	function giveNumberThree() {
-		var item = 3;
-		return item;
+	  var item = 3;
+	  return item;
 	}
 
 /***/ },
-/* 197 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -22104,95 +22381,97 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var TableLeft = function (_Component) {
-	  _inherits(TableLeft, _Component);
+	//Moved static head here to make the "TableLeft" Component
+	//a little less cray cray.
 	
-	  function TableLeft() {
-	    _classCallCheck(this, TableLeft);
+	var TableLeftStaticHead = function (_Component) {
+	  _inherits(TableLeftStaticHead, _Component);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TableLeft).apply(this, arguments));
+	  function TableLeftStaticHead() {
+	    _classCallCheck(this, TableLeftStaticHead);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TableLeftStaticHead).apply(this, arguments));
 	  }
 	
-	  _createClass(TableLeft, [{
-	    key: "render",
+	  _createClass(TableLeftStaticHead, [{
+	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        "table",
+	        'thead',
 	        null,
 	        _react2.default.createElement(
-	          "thead",
+	          'tr',
 	          null,
 	          _react2.default.createElement(
-	            "tr",
+	            'th',
 	            null,
 	            _react2.default.createElement(
-	              "th",
+	              'div',
 	              null,
-	              " "
-	            ),
-	            _react2.default.createElement(
-	              "th",
-	              null,
-	              "Price"
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          "tbody",
-	          null,
-	          _react2.default.createElement(
-	            "tr",
-	            null,
-	            _react2.default.createElement(
-	              "td",
-	              null,
-	              _react2.default.createElement(
-	                "div",
-	                null,
-	                _react2.default.createElement(
-	                  "a",
-	                  { href: "/en-us/shop.html", className: "ni-uppercase ni-btn ni-btn-commerce" },
-	                  _react2.default.createElement(
-	                    "span",
-	                    null,
-	                    "Select"
-	                  )
-	                )
-	              )
+	              _react2.default.createElement('span', null)
 	            )
 	          ),
-	          _react2.default.createElement("tr", null),
-	          _react2.default.createElement("tr", null),
-	          _react2.default.createElement("tr", null),
-	          _react2.default.createElement("tr", null)
+	          _react2.default.createElement(
+	            'th',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'span',
+	                null,
+	                'Price'
+	              )
+	            )
+	          )
 	        )
 	      );
 	    }
 	  }]);
 	
-	  return TableLeft;
+	  return TableLeftStaticHead;
 	}(_react.Component);
-
-	exports.default = TableLeft;
+	
+	exports.default = TableLeftStaticHead;
 
 /***/ },
-/* 198 */
+/* 201 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.camelToReadable = camelToReadable;
+	function camelToReadable(str) {
+	  if (typeof str !== "string") {
+	    throw new Error("This function only accepts strings as arguments");
+	  }
+	
+	  return str.replace(/([A-Z])/g, ' $1').replace(/^./, function (str) {
+	    return str.toUpperCase();
+	  });
+	}
+
+/***/ },
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(199);
+	var content = __webpack_require__(203);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(193)(content, {});
+	var update = __webpack_require__(194)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./tables.scss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./tables.scss");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./TableContainer.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./TableContainer.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -22202,15 +22481,15 @@
 	}
 
 /***/ },
-/* 199 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(192)();
+	exports = module.exports = __webpack_require__(193)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, ".table.ni-table-comparison > tbody > tr > td:nth-child(2) {\n  font-size: 16px;\n  line-height: 22px; }\n\n.table.ni-table-comparison > thead > tr > th > div, .table.ni-table-comparison > tbody > tr > td, .table.ni-table-data > thead, .table.ni-table-data > tbody > tr > td {\n  font-size: 13px;\n  line-height: 17px; }\n\n.table.ni-table-comparison .ni-btn {\n  margin: 0;\n  width: 112px; }\n\n.table.ni-table-comparison > thead > tr > th {\n  padding: 0;\n  padding-right: 6px;\n  border: none; }\n\n.table.ni-table-comparison > thead > tr > th > div {\n  background-color: #444;\n  color: #FFF;\n  border-top-width: 4px;\n  border-color: #3498DB;\n  border-top-style: solid;\n  padding: 10px;\n  display: flex;\n  min-height: 58px;\n  width: 100%;\n  justify-content: space-between; }\n\n.table.ni-table-comparison > thead > tr > th > div > i {\n  padding-left: 5px; }\n\n.table.ni-table-comparison > tbody > tr > td {\n  padding: 0;\n  padding-right: 6px;\n  border: none; }\n\n.table.ni-table-comparison > tbody > tr > td > div {\n  padding: 10px 20px;\n  height: 62px;\n  display: flex;\n  align-items: center; }\n\n.table.ni-table-comparison > tbody > tr:nth-child(even) > td > div {\n  background-color: #f4f4f4; }\n\n.table.ni-table-comparison > tbody > tr > td:nth-child(2) {\n  color: #6AA239;\n  font-weight: bolder; }\n\n.table.ni-table-data > thead {\n  text-transform: uppercase;\n  font-weight: bolder; }\n\n.table.ni-table-data > tbody > tr {\n  height: 50px; }\n\n.table.ni-table-data > tbody > tr:nth-child(2n) {\n  background: #f4f4f4; }\n\n.table.ni-table-data > tbody > tr > td {\n  line-height: 50px;\n  padding-top: 0;\n  padding-bottom: 0; }\n\n.table.ni-table-data > tbody > tr > td:not(:last-child) {\n  border-right: 1px solid #ccc; }\n\n.display-wrapper {\n  width: 1200px;\n  margin: 45px auto; }\n", ""]);
+	exports.push([module.id, ".TableContainer {\n  max-width: 1100px;\n  margin: 0 auto; }\n  .TableContainerRight {\n    max-width: 750px;\n    overflow-x: auto; }\n  .TableContainerLeft {\n    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);\n    position: relative; }\n", ""]);
 	
 	// exports
 

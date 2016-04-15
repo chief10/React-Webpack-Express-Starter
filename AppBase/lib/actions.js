@@ -1,5 +1,17 @@
 export const DO_SOMETHING = "DO_SOMETHING";
+export const POPULATE_DATAROWS = "POPULATE_DATAROWS";
 
+export function populateInitialData(startingData) {
+  return {
+    type: POPULATE_DATAROWS,
+    dataRows: startingData    
+  }
+}
+
+
+
+
+//These functions aren't used for anything.
 export function addSomething(thingToAdd) {
 	return {
 		type: DO_SOMETHING,

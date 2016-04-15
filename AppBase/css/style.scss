@@ -1,0 +1,21 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-color: white;
+}
+
+a {
+  color: #00B7FF;
+}
+
+//Specific styles
+
+
+//Coming back to this to remove the important flag
+.ni-table-highlight {
+  display: none !important;
+}
+
+.TableTable {
+  display: flex;
+}

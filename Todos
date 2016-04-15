@@ -1,0 +1,3 @@
+Add highlight for selecting a box.
+Add dropdowns for selection and filtering
+Move dropshadow style to a class that can be added conditionally

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "dev": "webpack webpack.config.babel.js --watch ./AppBase/**/*",
+    "dev": "webpack webpack.config.babel.js --watch ./AppBase/**/*.js",
     "test": "mocha --compilers js:babel-register --recursive __tests__/**/*.js",
     "test:watch": "npm test -- --watch"
   },
@@ -31,6 +31,11 @@
     "babel-register": "^6.7.2",
     "chai": "^3.5.0",
     "css-loader": "^0.23.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-watch": "^4.3.5",
     "jsdom": "^8.3.1",
     "mocha": "^2.4.5",
     "node-sass": "^3.4.2",

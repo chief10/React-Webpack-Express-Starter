@@ -1,5 +1,8 @@
-export const DO_SOMETHING = "DO_SOMETHING";
+export const DO_SOMETHING      = "DO_SOMETHING";
 export const POPULATE_DATAROWS = "POPULATE_DATAROWS";
+export const SELECT_HIGHLIGHT  = "SELECT_HIGHLIGHT";
+export const DESELECT_HIGHLIGHT = "DESELECT_HIGHLIGHT";
+export const POPULATE_DATAROWS_ALL = "POPULATE_DATAROWS_ALL";
 
 export function populateInitialData(startingData) {
   return {
@@ -8,24 +11,26 @@ export function populateInitialData(startingData) {
   }
 }
 
-
-
-
-//These functions aren't used for anything.
-export function addSomething(thingToAdd) {
-	return {
-		type: DO_SOMETHING,
-		id: '1',
-		thingToAdd
-	}
+//Used when a person clicks on the "Select"" button on the left side
+//of the graph.
+export function selectItemToHighlight(indexOfItem) {
+    return {
+      type: SELECT_HIGHLIGHT,
+      key: indexOfItem
+    }
 }
 
-export function giveNumTwo() {
-  let item = 2;
-  return item;
+//Simply traverses the state tree and removes any indication of wanting to 
+//highlight items.
+export function deselectItemToHighlight() {
+  return {
+    type: DESELECT_HIGHLIGHT
+  }
 }
 
-export function giveNumberThree() {
-  let item = 3;
-  return item;
+//For initial page render when the page 
+export function populateTableWithAllData() {
+  return {
+    type: POPULATE_DATAROWS_ALL
+  }
 }

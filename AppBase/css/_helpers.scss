@@ -1,0 +1,12 @@
+.add-shadow {
+  box-shadow: inset 1px 0px 3px rgba(0, 0, 0, 0.5);
+}
+
+.itemIsShowing {
+  display: block !important;
+}
+
+.fake-link {
+  color: $color-highlight;
+  cursor: pointer;
+}

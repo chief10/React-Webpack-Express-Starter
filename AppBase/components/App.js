@@ -9,13 +9,14 @@ class App extends Component {
   }
   
   componentDidMount() {
-    const { dispatch } = this.props;
+    console.log(this.props)
   }
   
 	render() {
+    const { dispatch } = this.props;
 		return (
 			<div>
-         <TableContainer dataRows={this.props.dataRows}/>
+         <TableContainer {...this.props}/>
 			</div>
 		)
 	}

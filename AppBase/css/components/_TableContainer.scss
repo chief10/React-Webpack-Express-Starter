@@ -1,0 +1,42 @@
+.TableContainer {
+  max-width: 1100px;
+  margin: 0 auto;
+  
+  &Right {
+    max-width:775px;  
+    overflow-x: auto;
+  }
+  
+  &Left {
+    
+    //The box-shadow for this will likely have to be moved to a different
+    //class for situations where it is only added when the table is
+    //scrollable.
+    box-shadow: 2px 0px 0px rgba(0,0,0,0.2);
+    position: relative;
+    
+
+  }
+}
+
+
+
+.TableLeftSelectContainer {
+  position: relative;
+}
+
+.TableTable {
+  position: relative;
+  display: flex;
+  
+  &:after {
+    content: "";
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.10));
+    height: 100%;
+    width: 10px;
+    position: absolute;
+    top: 0;
+    right: 0px;
+    z-index: 9000;
+  }
+}

@@ -13,10 +13,10 @@ module.exports = {
     loaders: [
 
       //Javascript Loader
-      { test: /\.js$/, loader: 'babel-loader', exclude: '/node_modules/' },
+      { test: /\.js$/, loader: 'babel-loader', exclude: '/node_modules/' }
 
       //SCSS/CSS Loader
-      { test: /\.scss$/, loaders: ['style', 'css', 'sass'] }
+      // { test: /\.scss$/, loaders: ['style', 'css', 'sass'] }
     ]
   }
 

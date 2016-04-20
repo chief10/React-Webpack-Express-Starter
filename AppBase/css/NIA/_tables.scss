@@ -1,26 +1,4 @@
-/////////////////////
-// Start of config //
-/////////////////////
 
-$color-nightly: #444;
-$color-stars: #FFF;
-$color-highlight: #3498DB;
-$color-accent: #f4f4f4;
-$color-success: #6AA239;
-
-%primary-body-copy {
-  font-size: 16px;
-  line-height: 22px;
-}
-
-%secondary-body-copy {
-  font-size: 13px;
-  line-height: 17px;
-}
-
-///////////////////
-// End of config //
-///////////////////
 
 
 
@@ -38,22 +16,26 @@ $color-success: #6AA239;
     padding: 0;
     padding-right: 6px;  
     border: none;
-    min-width: 100px;
+    height: 70px;
   }
   
   //Styles for the header row; the cells
   //with the dark background.
   > thead > tr > th > div {
     @extend %secondary-body-copy;
+    font-weight: normal;
     background-color: $color-nightly;
     color: $color-stars;
     border-top-width: 4px;
-    border-color: $color-highlight;
+    border-color: $color-nightly;
     border-top-style: solid;
     padding: 10px;
     display: flex;
-    min-height: 58px;
+    min-height: 48px;
+    height: 30px;
     justify-content: space-between;
+    min-width: 155px;
+    text-align: left;
   }
   
   > thead > tr > th > div > i {
@@ -70,7 +52,7 @@ $color-success: #6AA239;
   //Styles for main cells of table.
   > tbody > tr > td > div {
     padding: 10px 20px;
-    height: 62px;
+    height: 50px;
     display: flex;
     align-items: center;
   }
